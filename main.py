@@ -10,11 +10,13 @@ def create_file_csv(file: str = 'file name'):
 
 # функция вывода данных
 def show_data(data: list[str]):
-    for element in data:
-        print(f'ID: {element[0]}  Дата создания: {element[3]}')
-        print(f'\tЗаголовок: {element[1]}')
-        print(f'\tЗаметка: {element[2]}')
-    # print(data)
+    if not data:
+        print('Файл не содержит заметок!')
+    else:
+        for element in data:
+            print(f'ID: {element[0]}  Дата создания: {element[3]}')
+            print(f'\tЗаголовок: {element[1]}')
+            print(f'\tЗаметка: {element[2]}')
 
 # функция чтения данных из файла
 def read_data(file: str = 'file name'):
@@ -22,7 +24,6 @@ def read_data(file: str = 'file name'):
         with open(file, 'r', encoding='utf-8') as f:
             csv_reader = csv.reader(f, delimiter = ";")
             return list(csv_reader)[1:] # удаляет строку заголовка
-
     except FileNotFoundError:
         print('\u001b[31mФайл  не найден.\n\u001b[0m')
         return []  
@@ -41,7 +42,7 @@ def filtering_data(data: list[str]):
     return data
 
 # функция записи данных в файл
-def write_data(data: str, file: str = 'file name'):
+def write_data(data: list[str], file: str = 'file name'):
     with open(file, 'w', encoding='utf-8') as f:
         csv_writer = csv.writer(f, delimiter = ";", lineterminator="\r")
         csv_writer.writerow(['ID', 'Заголовок', 'Заметка', 'Дата_создания'])
@@ -57,7 +58,7 @@ def creating_note(data: list[str]):
     
     heading = input('Введите заголовок заметки: ')
     note = input('Введите текст заметки: ')
-    today = date.today()
+    today = datetime.date.today()
     current_date = today.strftime("%d.%m.%Y")
     new_line = [str(new_id), heading, note, current_date]
     data.append(new_line)
@@ -73,7 +74,7 @@ def edit_note(data: list[str]):
             found = True
             heading = input('Введите новый заголовок заметки: ')
             note = input('Введите новое содержание заметки: ')
-            today = date.today()
+            today = datetime.date.today()
             current_date = today.strftime("%d.%m.%Y")
             data[index] = [str(select_id), heading, note, current_date]
             print('Редактирование заметки прошло успешно.')
