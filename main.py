@@ -82,6 +82,20 @@ def edit_note(data: list[str]):
         print('\u001b[31mУказанный ID в заметках не найден!\u001b[0m')        
     return data
 
+# функция удаления заметки
+def delete_note(data: list[str]):
+    select_id = int(input('Для удаления заметки введите её ID: '))
+    found = False
+    for index, item in enumerate(data):
+        if int(item[0]) == select_id:
+            del data[index]
+            found = True
+            print('Удаление заметки прошло успешно.')
+            break
+    if not found:
+        print('\u001b[31mУказанный ID в заметках не найден!\u001b[0m')        
+    return data
+
 def main():
     file_name = input('Введите имя файла, в котором будут хранится заметки: ') + '.csv'
     create_file_csv(file_name)
@@ -119,6 +133,11 @@ def main():
             data = read_data(file_name)
             new_data = edit_note(data)
             write_data(new_data, file_name)
+        elif answer == '5':
+            print('Выбрано: \u001b[32mУдалить заметку \u001b[0m')
+            data = read_data(file_name)
+            new_note = delete_note(data)
+            write_data(new_note, file_name)
 
 if __name__ == '__main__':
     main()
