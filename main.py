@@ -28,7 +28,7 @@ def read_data(file: str = 'file name'):
         print('\u001b[31mФайл  не найден.\n\u001b[0m')
         return []  
 
-# функция фильтрации данных по дате
+# функция фильтрации данных по дате 
 def filtering_data(data: list[str]):
     if not data:
         print('\u001b[31mДанные для фильтрации отсутствуют!\u001b[0m')
