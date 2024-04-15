@@ -1,6 +1,12 @@
+# функция создания файла
+def create_file_csv(file: str = 'file name'):
+    with open(file, 'w', encoding='utf-8') as f:
+        f.write('ID;Заголовок;Заметка;Дата_создания\n')
+    print(f'\u001b[32mФайл {file} создан\u001b[0m')
+
 def main():
     file_name = input('Введите имя файла, в котором будут хранится заметки: ') + '.csv'
-    
+    create_file_csv(file_name)
     flag = True
     while flag:
         print()
