@@ -1,3 +1,6 @@
+
+import datetime
+
 # функция создания файла
 def create_file_csv(file: str = 'file name'):
     with open(file, 'w', encoding='utf-8') as f:
@@ -23,6 +26,20 @@ def read_data(file: str = 'file name'):
         print('\u001b[31mФайл  не найден.\n\u001b[0m')
         return []  
 
+# функция фильтрации данных по дате
+def filtering_data(data: list[str]):
+    format = '%d.%m.%Y'
+    try:
+        starting_date = datetime.datetime.strptime(input('Введите начальную дату (dd.mm.yyyy): '), format)
+        end_date = datetime.datetime.strptime(input('Введите конечную дату (dd.mm.yyyy): '), format)
+        data = filter(lambda x: starting_date<= datetime.datetime.strptime(x[3], format)<=end_date, data)
+        print('Найденные заметки: \n')
+    except ValueError:
+        print('\u001b[31mПри вводе даты был использован другой формат!\u001b[0m')
+        print('\u001b[32mПросмотрите все заметки \n\u001b[0m')
+    
+    return data
+
 def main():
     file_name = input('Введите имя файла, в котором будут хранится заметки: ') + '.csv'
     create_file_csv(file_name)
@@ -45,7 +62,11 @@ def main():
             print('Выбрано: \u001b[32mПросмотреть все заметки \u001b[0m')
             data = read_data(file_name)
             show_data(data)        
-    
+        elif answer == '2':
+            print('Выбрано: \u001b[32mПросмотреть заметки с фильтрацией по дате \u001b[0m')
+            data = read_data(file_name)
+            f_data = filtering_data(data)
+            show_data(f_data)    
 
 if __name__ == '__main__':
     main()
