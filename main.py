@@ -11,7 +11,7 @@ def create_file_csv(file: str = 'file name'):
 # функция вывода данных
 def show_data(data: list[str]):
     if not data:
-        print('Файл не содержит заметок!')
+        print('\u001b[31mФайл не содержит заметок!\n\u001b[0m')
     else:
         for element in data:
             print(f'ID: {element[0]}  Дата создания: {element[3]}')
