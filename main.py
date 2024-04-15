@@ -36,9 +36,15 @@ def filtering_data(data: list[str]):
         print('Найденные заметки: \n')
     except ValueError:
         print('\u001b[31mПри вводе даты был использован другой формат!\u001b[0m')
-        print('\u001b[32mПросмотрите все заметки \n\u001b[0m')
-    
+        print('\u001b[32mПросмотрите все заметки \n\u001b[0m')    
     return data
+
+# функция записи данных в файл
+def write_data(data: str, file: str = 'file name'):
+    with open(file, 'w', encoding='utf-8') as f:
+        csv_writer = csv.writer(f, delimiter = ";", lineterminator="\r")
+        csv_writer.writerow(['ID', 'Заголовок', 'Заметка', 'Дата_создания'])
+        csv_writer.writerows(data)
 
 def main():
     file_name = input('Введите имя файла, в котором будут хранится заметки: ') + '.csv'
