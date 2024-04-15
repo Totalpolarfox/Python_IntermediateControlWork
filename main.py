@@ -46,6 +46,23 @@ def write_data(data: str, file: str = 'file name'):
         csv_writer.writerow(['ID', 'Заголовок', 'Заметка', 'Дата_создания'])
         csv_writer.writerows(data)
 
+# функция создания заметки
+def creating_note(data: list[str]):
+    if not data:
+        new_id = 1
+    else:
+        max_id = max([int(item[0]) for item in data])
+        new_id = max_id + 1
+    
+    heading = input('Введите заголовок заметки: ')
+    note = input('Введите текст заметки: ')
+    today = date.today()
+    current_date = today.strftime("%d.%m.%Y")
+    new_line = [str(new_id), heading, note, current_date]
+    data.append(new_line)
+    print('Новая заметка успешно лобавлена.')
+    return data
+
 def main():
     file_name = input('Введите имя файла, в котором будут хранится заметки: ') + '.csv'
     create_file_csv(file_name)
@@ -73,6 +90,11 @@ def main():
             data = read_data(file_name)
             f_data = filtering_data(data)
             show_data(f_data)    
+        elif answer == '3':
+            print('Выбрано: \u001b[32mСоздать новую заметку \u001b[0m')
+            data = read_data(file_name)
+            new_note = creating_note(data)
+            write_data(new_note, file_name)
 
 if __name__ == '__main__':
     main()
