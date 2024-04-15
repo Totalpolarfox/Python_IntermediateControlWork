@@ -11,7 +11,7 @@ def create_file_csv(file: str = 'file name'):
 # функция вывода данных
 def show_data(data: list[str]):
     if not data:
-        print('\u001b[31mФайл не содержит заметок!\n\u001b[0m')
+        print('\u001b[31mФайл не содержит заметок!\u001b[0m')
     else:
         for element in data:
             print(f'ID: {element[0]}  Дата создания: {element[3]}')
@@ -30,16 +30,19 @@ def read_data(file: str = 'file name'):
 
 # функция фильтрации данных по дате
 def filtering_data(data: list[str]):
-    format = '%d.%m.%Y'
-    try:
-        starting_date = datetime.datetime.strptime(input('Введите начальную дату (dd.mm.yyyy): '), format)
-        end_date = datetime.datetime.strptime(input('Введите конечную дату (dd.mm.yyyy): '), format)
-        data = filter(lambda x: starting_date<= datetime.datetime.strptime(x[3], format)<=end_date, data)
-        print('Найденные заметки: \n')
-    except ValueError:
-        print('\u001b[31mПри вводе даты был использован другой формат!\u001b[0m')
-        print('\u001b[32mПросмотрите все заметки \n\u001b[0m')    
-    return data
+    if not data:
+        print('\u001b[31mДанные для фильтрации отсутствуют!\u001b[0m')
+    else:    
+        format = '%d.%m.%Y'
+        try:
+            starting_date = datetime.datetime.strptime(input('Введите начальную дату (dd.mm.yyyy): '), format)
+            end_date = datetime.datetime.strptime(input('Введите конечную дату (dd.mm.yyyy): '), format)
+            data = filter(lambda x: starting_date<= datetime.datetime.strptime(x[3], format)<=end_date, data)
+            print('Найденные заметки: \n')
+        except ValueError:
+            print('\u001b[31mПри вводе даты был использован другой формат!\u001b[0m')
+            print('\u001b[32mПросмотрите все заметки \n\u001b[0m')    
+        return data
 
 # функция записи данных в файл
 def write_data(data: list[str], file: str = 'file name'):
